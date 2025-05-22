@@ -5,6 +5,8 @@ services:
     command: python -m uvicorn clarifai.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - ./backend/clarifai/:/backend/clarifai
+      - ./backend/logs:/backend/logs
     ports:
       - "8000:8000"
     depends_on:
@@ -18,6 +20,8 @@ services:
     build: ./frontend
     container_name: clarifai-frontend
     command: npm run start
+    volumes:
+      - ./frontend/src:/frontend/src
     ports:
       - "3000:3000"
     depends_on:
