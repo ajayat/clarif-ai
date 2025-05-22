@@ -12,13 +12,13 @@ load_dotenv()
 # Set up logging
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
+    format="%(levelname)s:     %(asctime)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 logger = logging.getLogger(__name__)
 
 # Define global constants
 ROOT_DIR = Path(__file__).parent.parent
-STATIC_DIR = ROOT_DIR / "static"
 DATA_DIR = ROOT_DIR / "data"
 
 app = FastAPI()
@@ -37,4 +37,6 @@ app.add_middleware(
 async def root():
     with open(STATIC_DIR / "html/default.html", "r") as file:
         content = file.read()
+
+    logger.info("Serving default HTML page")
     return HTMLResponse(content=content)
