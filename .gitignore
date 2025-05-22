@@ -1,0 +1,15 @@
+# Virtual environments
+.venv/
+
+# Python
+__pycache__/
+
+# IDEs
+.idea/
+.vscode/
+
+# Ignore logs
+*.log
+
+# Node modules
+node_modules/

@@ -1,0 +1,46 @@
+services:
+  backend:
+    build: ./backend
+    container_name: clarifai-backend
+    command: python -m uvicorn clarifai.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/clarifai-postgres
+    networks:
+      - clarifai-network
+
+  frontend:
+    build: ./frontend
+    container_name: clarifai-frontend
+    command: npm run start
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - clarifai-network
+
+  db:
+    image: postgres:latest
+    container_name: clarifai-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: clarifai-postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - clarifai-network
+
+volumes:
+  pg_data:
+
+networks:
+  clarifai-network:

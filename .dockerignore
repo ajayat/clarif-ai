@@ -1,0 +1,21 @@
+# IDE config folder
+.vscode/
+.idea/
+
+# Environments
+.env/
+.venv/
+
+# Git
+.gitignore
+.gitattributes
+.git/
+.pre-commit-config.yaml
+
+# Python
+__pycache__/
+
+# Resources
+LICENSE
+README.md
+docker-compose.yaml
