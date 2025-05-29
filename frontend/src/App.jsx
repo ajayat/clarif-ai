@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import './App.css';
-import logo from './assets/logo.svg'; // Import the logo
+import logo from './assets/logo.svg';
 
 function App() {
   useEffect(() => {
@@ -8,14 +8,29 @@ function App() {
   }, []);
 
   return (
-    <div className="hero">
-      <div className="hero-header">
-        <img src={logo} alt="ClarifAI Logo" className="hero-logo" />
-        <h1 className="hero-title">ClarifAI</h1>
-      </div>
-      <p className="hero-subtitle">
-        Welcome to your AI-powered project platform. Build, analyze, and innovate with ClarifAI.
-      </p>
+    <div className="app-container">
+      <aside className="sidebar">
+        <img src={logo} alt="ClarifAI Logo" className="sidebar-logo" />
+        <nav className="nav-menu">
+          <a href="#home">Home</a>
+          <a href="#business">For Business</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </aside>
+      <main className="main-content">
+        <header className="header-buttons">
+          <a href="/dashboard" className="btn-sign">Sign In</a>
+          <a href="/" className="btn-sign">Sign Out</a>
+        </header>
+        <section className="hero-section">
+          <img src={logo} alt="ClarifAI Logo" className="hero-logo-large" />
+          <h1 className="hero-title">ClarifAI</h1>
+          <p className="hero-tagline">Never Stop Your Doubt,</p>
+          <p className="hero-highlight">ClarifAI Them.</p>
+          <button className="btn-cta">Try ClarifAI</button>
+        </section>
+      </main>
     </div>
   );
 }
