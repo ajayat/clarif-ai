@@ -1,0 +1,43 @@
+.cta-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem; /* Horizontal space between buttons */
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  /* flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+
+/* Call to action button */
+.btn-cta {
+  background: linear-gradient(135deg, #00d0de, #00695c);
+  color: white;
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+.btn-cta:hover {
+  opacity: 0.5;
+}
+    
+.btn-cta.large {
+  font-size: 1.25rem;
+  padding: 0 2em;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.highlight {
+  font-size: 3rem;
+  font-weight: 300;
+  color: #0dd;
+  margin-bottom: 1rem;
+}

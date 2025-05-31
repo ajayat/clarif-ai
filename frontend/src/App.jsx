@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import './App.css';
+import Sidebar from './Sidebar';
 import logo from './assets/logo.svg';
 
 function App() {
@@ -9,15 +9,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <aside className="sidebar">
-        <img src={logo} alt="ClarifAI Logo" className="sidebar-logo" />
-        <nav className="nav-menu">
-          <a href="#home">Home</a>
-          <a href="#business">For Business</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </aside>
+      <Sidebar />
       <main className="main-content">
         <header className="header-buttons">
           <a href="/dashboard" className="btn-sign">Sign In</a>
@@ -28,7 +20,7 @@ function App() {
           <h1 className="hero-title">ClarifAI</h1>
           <p className="hero-tagline">Never Stop Your Doubt,</p>
           <p className="hero-highlight">ClarifAI Them.</p>
-          <button className="btn-cta">Try ClarifAI</button>
+          <button className="btn-sign">Try ClarifAI</button>
         </section>
       </main>
     </div>

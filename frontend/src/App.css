@@ -7,6 +7,10 @@ body, html {
   color: white;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Layout */
 .app-container {
   display: flex;
@@ -108,44 +112,6 @@ body, html {
   font-size: 1.25rem;
   color: #0dd;
   margin-bottom: 2rem;
-}
-
-.cta-container {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem; /* Horizontal space between buttons */
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-  /* flex-wrap: wrap; /* Allows wrapping on smaller screens */
-}
-
-
-/* Call to action button */
-.btn-cta {
-  background: linear-gradient(135deg, #00f0ff, #00695c);
-  color: white;
-  padding: 0.75rem 2rem;
-  border: none;
-  border-radius: 9999px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: opacity 0.3s;
-}
-
-.btn-cta:hover {
-  opacity: 0.9;
-}
-
-.btn-cta.large {
-  font-size: 1.25rem;
-  padding: 1.25rem 2rem;
-  min-width: 280px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  white-space: nowrap;
 }
 
 /* Responsive */
