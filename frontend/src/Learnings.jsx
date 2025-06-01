@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Sidebar from './Sidebar';
+import './App.css';
 import './Learnings.css';
 
 function Learnings() {

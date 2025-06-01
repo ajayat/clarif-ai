@@ -11,5 +11,8 @@ __pycache__/
 # Ignore logs
 *.log
 
+# Data
+backend/data/
+
 # Node modules
 node_modules/

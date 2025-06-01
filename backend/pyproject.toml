@@ -1,0 +1,28 @@
+[project]
+name = "ClarifAI"
+version = "0.1.0"
+description = "High-Tech Entrepreneurship Project"
+requires-python = ">=3.11"
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "sqlalchemy",
+    "python-dotenv",
+    "pandas",
+    "transformers",
+    "torch<3.0",
+]
+
+
+[tool.uv.pip]
+index-url = "https://pypi.org/simple"
+extra-index-url = ["https://download.pytorch.org/whl/cpu"]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu" },]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

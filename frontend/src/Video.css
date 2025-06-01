@@ -1,0 +1,118 @@
+/* Page layout */
+.video-page {
+  display: flex;
+  background-color: #2c2f36;
+  color: white;
+  min-height: 100vh;
+}
+
+.video-main {
+  flex: 1;
+  padding: 2rem;
+}
+
+.video-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-link {
+  color: #0dd;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.video-title {
+  font-size: 2rem;
+  margin: 1.5rem 0;
+}
+
+/* Video and chatbot layout */
+.video-layout {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.video-player-container {
+  flex: 2;
+  background: #e0e0e0;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-player {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+.chatbot-container {
+  flex: 1;
+  background-color: #1e1f23;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Tools section */
+.tools-section {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.tools-intro {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.tools-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.tool-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  transition: color 0.3s;
+}
+
+.tool-button:hover {
+  color: #0dd;
+}
+
+.completion-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.circle-progress {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #000 45%, #0dd 46%, #0dd 54%, #000 55%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}

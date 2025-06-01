@@ -23,15 +23,14 @@ docker compose up
 ### Backend
 The API is built using [FastAPI](https://fastapi.tiangolo.com/), you need to install [Python 3.11](https://www.python.org/downloads/release/python-31112/) or more.
 
-#### Using Pipenv
+#### Using uv
 
-Install [Pipenv](https://pipenv.pypa.io/en/latest/) with `pip install pipenv`.
+Install [uv](https://docs.astral.sh/uv/) with `pip install uv`.
 
-Create an empty `.venv` directory and install dependencies using `Pipenv`:
+Then, make sure you are in the `backend/` directory and run the following command to install dependencies:
 
 ```bash
-mkdir .venv
-pipenv install
+uv sync
 ```
 
 ### Frontend

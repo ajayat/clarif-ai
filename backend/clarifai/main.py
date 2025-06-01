@@ -1,8 +1,9 @@
 import logging
+import json
 from pathlib import Path
 from dotenv import load_dotenv
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
@@ -20,6 +21,7 @@ logger = logging.getLogger(__name__)
 # Define global constants
 ROOT_DIR = Path(__file__).parent.parent
 DATA_DIR = ROOT_DIR / "data"
+STATIC_DIR = ROOT_DIR / "static"
 
 app = FastAPI()
 
@@ -39,4 +41,15 @@ async def root():
         content = file.read()
 
     logger.info("Serving default HTML page")
-    return HTMLResponse(content=content)
+    return HTMLResponse(content=content, status_code=200)
+
+
+@app.get("/video/{video_id}")
+def get_video(video_id: str):
+    with open(DATA_DIR / "videos.json", "r") as file:
+        videos_db = json.load(file)
+
+    video = videos_db.get(video_id)
+    if not video:
+        raise HTTPException(status_code=404, detail="Video not found")
+    return video
