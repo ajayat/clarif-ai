@@ -46,10 +46,11 @@ async def root():
 
 @app.get("/video/{video_id}")
 def get_video(video_id: str):
-    with open(DATA_DIR / "videos.json", "r") as file:
+    with open(DATA_DIR / "videos.json", "r", encoding="utf-8") as file:
         videos_db = json.load(file)
 
     video = videos_db.get(video_id)
     if not video:
         raise HTTPException(status_code=404, detail="Video not found")
+    print(video)
     return video

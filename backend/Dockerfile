@@ -1,4 +1,4 @@
-FROM python:3.11-slim-buster
+FROM python:3.12-slim-bookworm
 # slim=debian-based. Not using alpine because it has poor python3 support.
 
 # Set pip to have cleaner logs
@@ -7,17 +7,19 @@ ENV PYTHONUNBUFFERED=1 \
 
 ENV TZ=Europe/Paris
 
-# Install Pipenv
-RUN pip install --no-cache-dir -U pipenv
+# Install uv package manager
+RUN pip install --no-cache-dir -U uv
 
 WORKDIR /backend
 
 # Copy the packages list
-COPY Pipfile* ./
+COPY pyproject.toml ./
 
 # Install the dependencies
-RUN pipenv lock \
-    && pipenv install --clear --system
+ENV UV_PROJECT_ENVIRONMENT="/usr/local/"
+
+RUN uv lock && \
+    uv sync --no-dev --locked
 
 # Copy the source code into the image
 COPY . .

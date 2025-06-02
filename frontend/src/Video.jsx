@@ -7,17 +7,23 @@ import Chatbot from './Chatbot';
 import './App.css';
 import './Video.css';
 
-
 function Video() {
   const { id } = useParams();
   const [videoData, setVideoData] = useState(null);
 
   useEffect(() => {
-  fetch(`http://localhost:8000/video/${id}`)
-      .then(res => res.json())
-      .then(setVideoData)
-      .catch(console.error);
-      document.title = `Video ${id} - ClarifAI`;
+    async function fetchVideo() {
+      const res = await fetch(`http://localhost:8000/video/${id}`);
+      if (res.ok) {
+        const data = await res.json();
+        setVideoData(data);
+        document.title = `Video ${id} - ClarifAI`;
+      }
+      else {
+        console.error('Failed to fetch video data');
+      }
+    }
+    fetchVideo();
   }, [id]);
 
   return (
@@ -25,16 +31,21 @@ function Video() {
       <Sidebar />
       <main className="video-main">
         <header className="header-buttons">
-          <a href="/dashboard" className="back-link">&lt; Back</a>
+          <a href="/dashboard" className="btn-sign">
+            <span className="back-arrow">&larr;</span>Back
+          </a>
           <a href="/" className="btn-sign">Sign Out</a>
         </header>
-        <h1 className="video-title">Video 1</h1>
+        <h2 className="video-title">{videoData?.title || "Video " + id}</h2>
         <div className="video-layout">
           <div className="video-player-container">
-            <video className="video-player" controls>
-              <source src="https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {videoData ? (
+              <video controls className="video-player">
+                <source src={videoData.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : <span className="loading-spinner"></span>
+            }
           </div>
           <div className="chatbot-container">
             <Chatbot />
