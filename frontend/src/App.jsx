@@ -20,7 +20,7 @@ function App() {
           <h1 className="hero-title">ClarifAI</h1>
           <p className="hero-tagline">Never Stop Your Doubt,</p>
           <p className="hero-highlight">ClarifAI Them.</p>
-          <button className="btn-sign">Try ClarifAI</button>
+          <a href="/dashboard" className="btn-sign">Try ClarifAI</a>
         </section>
       </main>
     </div>

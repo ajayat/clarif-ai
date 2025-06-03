@@ -15,9 +15,15 @@ from clarifai import DATA_DIR
 
 logger = logging.getLogger(__name__)
 
-
 if "MISTRAL_API_KEY" not in os.environ:
     logger.warning("MISTRAL_API_KEY environment variable is not set.")
+
+mistral_llm = ChatMistralAI(
+    mistral_api_key=os.getenv("MISTRAL_API_KEY"),
+    model="mistral-large-latest",
+    temperature=0.1,
+    max_retries=2,
+)
 
 
 def download_video(video_url: str, output_path: str) -> str:
@@ -65,19 +71,22 @@ def summarize_text(text: str) -> str:
 
     prompt = PromptTemplate(
         input_variables=["content"],
-        template="Read the following PDF content and summarize the main points in concise bullet points:\n\n{content}\n\nSummary:",
+        template="Read the following PDF content and summarize it:\n\n{content}\n\nSummary:",
     )
 
-    llm = ChatMistralAI(
-        mistral_api_key=os.getenv("MISTRAL_API_KEY"),
-        model="mistral-large-latest",
-        temperature=0.1,
-        max_retries=2,
-    )
-
-    chain = LLMChain(llm=llm, prompt=prompt)
+    chain = LLMChain(llm=mistral_llm, prompt=prompt)
     summary = chain.run(content=text)
     return summary
+
+
+def chatbot_question(question: str, context: str = None) -> str:
+    prompt = PromptTemplate(
+        input_variables=["question", "context"],
+        template="You are a helpful assistant. Answer the question based on the context provided.\n\nContext: {context}\n\nQuestion: {question}\n\nAnswer:",
+    )
+    chain = LLMChain(llm=mistral_llm, prompt=prompt)
+    response = chain.run(question=question, context=context or "")
+    return response
 
 
 def transcribe_audio(audio_path: Path, save_to_file: bool = True) -> str:
