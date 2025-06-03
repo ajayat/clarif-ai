@@ -24,7 +24,7 @@ function Help() {
             </ul>
 
             <h2>📞 Need More Help?</h2>
-            <p>If you run into technical issues or have questions not covered here, our support team is ready to help. Please email us at <a href="mailto:support@clarifai.app">support@clarifai.app</a> or visit the <a href="/faq">FAQ page</a> for common questions and solutions. We're committed to ensuring your learning journey is smooth and successful.</p>
+            <p>If you run into technical issues or have questions not covered here, our support team is ready to help. Please email us at <a href="mailto:support@clarif.ai">support@clarif.ai</a>. We're committed to ensuring your learning journey is smooth and successful.</p>
           </div>
         </section>
       </main>

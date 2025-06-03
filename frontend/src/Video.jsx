@@ -35,7 +35,7 @@ function Video() {
       <Sidebar />
       <main className="video-main">
         <header className="header-buttons">
-          <a href="/dashboard" className="btn-sign">
+          <a href="/learnings" className="btn-sign">
             <span className="back-arrow">&larr;</span>Back
           </a>
           <a href="/" className="btn-sign">Sign Out</a>

@@ -24,7 +24,8 @@ function Chatbot() {
       });
 
       const reply = await res.text();
-      setMessages(prev => [...prev, { sender: 'bot', text: reply }]);
+      const cleanedReply = reply.replace(/^"|"$/g, ''); // Clean up quotes if present
+      setMessages(prev => [...prev, { sender: 'bot', text: cleanedReply}]);
     } catch (error) {
       setMessages(prev => [...prev, { sender: 'bot', text: 'Error: Could not get response.' }]);
     }
