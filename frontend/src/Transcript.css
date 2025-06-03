@@ -1,0 +1,38 @@
+.transcript-page {
+  padding: 2rem;
+  background-color: #2c2f36;
+  color: white;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.transcript-page-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #0dd;
+  text-align: center;
+}
+
+.transcript-box {
+  background-color: #1e1f23;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.transcript-content {
+  white-space: pre-wrap;
+  color: #e0e0e0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.transcript-loading {
+  font-style: italic;
+  text-align: center;
+  color: #aaa;
+  margin-top: 2rem;
+}

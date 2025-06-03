@@ -4,6 +4,7 @@
   "type": "collection",
   "ignore": [
     ".venv",
-    ".git"
+    ".git",
+    "data"
   ]
 }
