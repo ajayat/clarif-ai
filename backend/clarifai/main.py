@@ -1,15 +1,18 @@
-from email.mime import audio
-from importlib import metadata
 import logging
 import json
+from pydantic import BaseModel
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
-from numpy import save
 
 from clarifai import DATA_DIR, STATIC_DIR, API_URL
-from clarifai.utils import summarize_text, extract_audio_from_video, transcribe_audio
+from clarifai.utils import (
+    summarize_text,
+    extract_audio_from_video,
+    transcribe_audio,
+    chatbot_question,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -120,3 +123,17 @@ async def summarize_video(video_id: int) -> str:
     if not summary.strip():
         raise HTTPException(status_code=400, detail="Synthesis failed")
     return summary
+
+
+class QuestionPayload(BaseModel):
+    question: str
+
+
+@app.post("/videos/{video_id}/chatbot")
+async def chatbot_interaction(video_id: int, payload: QuestionPayload) -> str:
+    """
+    Chatbot interaction using a transcribed video.
+    """
+    transcript = await transcribe_video(video_id)
+    response = chatbot_question(payload.question, context=transcript)
+    return response.strip()

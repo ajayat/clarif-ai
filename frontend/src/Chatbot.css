@@ -4,6 +4,11 @@
   height: 100%;
 }
 
+.chatbot-messages {
+  overflow-y: auto;
+  max-height: 57vh;
+}
+
 .chatbot-message {
   background: #eee;
   color: #000;
@@ -29,6 +34,7 @@
 .chatbot-input {
   flex: 1;
   padding: 0.75rem;
+  margin-top: 0.5rem;
   border-radius: 9999px;
   border: none;
   outline: none;
@@ -40,7 +46,8 @@
 .chatbot-send-btn {
   background: none;
   border: none;
-  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  font-size: 2rem;
   color: white;
   cursor: pointer;
 }
