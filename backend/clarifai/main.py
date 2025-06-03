@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
 
 from clarifai import DATA_DIR, STATIC_DIR, API_URL
-from clarifai.utils import synthesize_text, extract_audio_from_video, transcribe_audio
+from clarifai.utils import summarize_text, extract_audio_from_video, transcribe_audio
 
 
 logger = logging.getLogger(__name__)
@@ -45,7 +45,7 @@ async def get_video_metadata(video_id: int) -> dict:
     with open(DATA_DIR / "videos.json", "r", encoding="utf-8") as f:
         videos = json.load(f)
     metadata = videos.get(str(video_id))
-    filename = metadata.get("filename").strip()
+    filename = metadata.get("filename")
     if not metadata or not metadata.get("url") and not filename:
         raise HTTPException(status_code=404, detail="Video metadata not found")
 
@@ -91,21 +91,21 @@ async def transcribe_video(video_id: int) -> str:
     extract_audio_from_video(video_url, audio_path.as_posix())
     text = transcribe_audio(audio_path.as_posix())
     if not text.strip():
-        raise HTTPException(status_code=500, detail="Transcription failed")
+        raise HTTPException(status_code=400, detail="Transcription failed")
     return text.strip()
 
 
-@app.get("/videos/{video_id}/synthesize", response_model=str)
-async def synthesize_video(video_id: int) -> str:
+@app.get("/videos/{video_id}/summarize", response_model=str)
+async def summarize_video(video_id: int) -> str:
     """
     Synthesize the transcribed text from a video into a summary.
     Args:
-        video_id (int): The ID of the video to synthesize.
+        video_id (int): The ID of the video to summarize.
     Returns:
-        str: The synthesized summary of the video content.
+        str: The summarized summary of the video content.
     """
-    text = await transcribe_video(video_id)["transcription"]
-    summary = synthesize_text(text)
+    text = await transcribe_video(video_id)
+    summary = summarize_text(text)
     if not summary.strip():
         raise HTTPException(status_code=400, detail="Synthesis failed")
     return summary

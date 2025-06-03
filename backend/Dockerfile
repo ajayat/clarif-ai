@@ -18,8 +18,7 @@ COPY pyproject.toml ./
 # Install the dependencies
 ENV UV_PROJECT_ENVIRONMENT="/usr/local/"
 
-RUN uv lock && \
-    uv sync --no-dev --locked
+RUN uv lock && uv sync --no-dev --locked
 
 # Copy the source code into the image
 COPY . .

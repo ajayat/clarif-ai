@@ -1,0 +1,12 @@
+{
+    "1": {
+        "title": "Clarif AI Presentation",
+        "description": "A presentation video showcasing Clarif AI features",
+        "filename": "ClarifAI.mp4"
+    },
+    "2": {
+        "title": "Sample Video",
+        "description": "A sample video for testing purposes",
+        "url": "https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    }
+}

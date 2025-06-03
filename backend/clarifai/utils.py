@@ -59,13 +59,13 @@ def extract_audio_from_video(video_path_or_url: str, audio_path: str):
     video.close()
 
 
-def synthesize_text(text: str) -> str:
+def summarize_text(text: str) -> str:
     if not text.strip():
         return "No extractable text found in PDF."
 
     prompt = PromptTemplate(
         input_variables=["content"],
-        template="Read the following PDF content and synthesize the main points in concise bullet points:\n\n{content}\n\nSummary:",
+        template="Read the following PDF content and summarize the main points in concise bullet points:\n\n{content}\n\nSummary:",
     )
 
     llm = ChatMistralAI(

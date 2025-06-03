@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+import { marked } from 'marked';
 import { useParams, useLocation } from 'react-router-dom';
 import './Transcript.css';
+
+marked.setOptions({ breaks: true });
 
 function TranscriptPage() {
   const { id } = useParams();
@@ -13,8 +16,7 @@ function TranscriptPage() {
       const res = await fetch(`http://localhost:8000/videos/${id}/transcribe`);
       if (res.ok) {
         const data = await res.text();
-        // Remove leading/trailing quotes
-        setTranscript(data.trim().replace(/^"|\"$/g, ''));
+        setTranscript(data.trim().replace(/^"|"$/g, ''));
         document.title = `Transcript | ${title} - ClarifAI`;
       } else {
         console.error('Failed to fetch transcript');
@@ -28,7 +30,9 @@ function TranscriptPage() {
       <h1 className="transcript-page-title">{`${title} - Transcript`}</h1>
       <div className="transcript-box">
         {transcript ? (
-          <pre className="transcript-content">{transcript}</pre>
+          <div className="transcript-content" 
+            dangerouslySetInnerHTML={{ __html: marked.parse(transcript) }} 
+          />
         ) : (
           <p className="transcript-loading">Loading transcript...</p>
         )}
