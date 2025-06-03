@@ -124,9 +124,22 @@ a {
 }
 
 .hero-title {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hero-logo-left {
+  width: 80px;
+  margin-bottom: 2rem;
+}
+
+.hero-text {
+  flex-grow: 1;
+  font-size: 4rem;
+  text-align: left;
+  margin-bottom: 2rem;
 }
 
 .hero-tagline {
@@ -137,7 +150,7 @@ a {
 .hero-highlight {
   font-size: 1.25rem;
   color: #0dd;
-  margin-bottom: 2rem;
+  margin: -1rem 0 2rem 0;
 }
 
 /* Responsive */

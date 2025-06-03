@@ -18,8 +18,8 @@ function Dashboard() {
           <h1 className="hero-title">Welcome Back, <span className="highlight">Lia</span></h1>
           <div className="cta-container">
             <a href="/learnings" className="btn-cta large">My Trainings</a>
-            <button className="btn-cta large">Discover the AI Tools</button>
-            <button className="btn-cta large">Need Help ?</button>
+            <a href="/tools" className="btn-cta large">Explore AI Tools</a>
+            <a href="/help" className="btn-cta large">Help & Support</a>
           </div>
         </section>
       </main>

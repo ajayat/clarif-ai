@@ -16,8 +16,10 @@ function App() {
           <a href="/" className="btn-sign">Sign Out</a>
         </header>
         <section className="hero-section">
-          <img src={logo} alt="ClarifAI Logo" className="hero-logo-large" />
-          <h1 className="hero-title">ClarifAI</h1>
+          <h1 className="hero-title">
+            <img src={logo} alt="ClarifAI Logo" className="hero-logo-left" />
+            <span className="hero-text">ClarifAI</span>
+          </h1>
           <p className="hero-tagline">Never Stop Your Doubt,</p>
           <p className="hero-highlight">ClarifAI Them.</p>
           <a href="/dashboard" className="btn-sign">Try ClarifAI</a>

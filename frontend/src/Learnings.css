@@ -14,7 +14,7 @@
 .learnings-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  column-gap: 5rem;
+  column-gap: 3rem;
   row-gap: 1rem;
   justify-items: center;
   width: 100%;
@@ -22,19 +22,19 @@
   margin: 0 auto;
 }
 
-
 .learning-card {
   background-color: #1e1f23;
   border: 1px solid #333;
   border-radius: 1rem;
   padding: 1.5rem;
-  width: 280px;
+  width: 18vw;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease;
 }
 
 .learning-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 0 10px rgba(0, 221, 221, 0.2);
 }
 
 .card-title {

@@ -58,7 +58,7 @@ function Video() {
 
         <section className="tools-section">
           <p className="tools-intro">Play & Learn with our AI Tools</p>
-          <div className="tools-grid">
+          <div className="tools-panel">
             <button className="tool-button">Mind Map</button>
             <button className="tool-button" onClick={
               () => navigate(`/learnings/${id}/summary`, {state: { title: videoTitle }})
@@ -70,7 +70,7 @@ function Video() {
           </div>
           <div className="completion-indicator">
             <p>You have completed</p>
-            <div className="circle-progress">100%</div>
+            <div className="circle-progress">50%</div>
             <p>of this training</p>
           </div>
         </section>
