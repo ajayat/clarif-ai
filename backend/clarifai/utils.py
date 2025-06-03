@@ -42,8 +42,8 @@ def download_video(video_url: str, output_path: str) -> str:
     return output_path
 
 
-def extract_audio_from_video(video_path_or_url: str, audio_path: str):
-    if os.path.exists(audio_path):
+def extract_audio_from_video(video_path_or_url: str, audio_path: Path):
+    if audio_path.exists():
         logger.debug(f"Audio file {audio_path} already exists. Skipping extraction.")
         return
     # Check if video_path is a URL
@@ -51,11 +51,11 @@ def extract_audio_from_video(video_path_or_url: str, audio_path: str):
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as tmpfile:
             video_path = download_video(video_path_or_url, tmpfile.name)
     else:
-        video_path = (DATA_DIR / video_path_or_url).as_posix()
-        print(f"Using local video path: {video_path}")
+        video_path = video_path_or_url
 
+    print(f"Extracting audio to: {audio_path.as_posix()}")
     video = VideoFileClip(video_path)
-    video.audio.write_audiofile(audio_path)
+    video.audio.write_audiofile(audio_path.as_posix())
     video.close()
 
 
@@ -80,12 +80,15 @@ def summarize_text(text: str) -> str:
     return summary
 
 
-def transcribe_audio(audio_path) -> str:
+def transcribe_audio(audio_path: Path, save_to_file: bool = True) -> str:
     """
     Transcribe audio from a file using Google Speech Recognition.
     """
+    if not audio_path.exists():
+        raise FileNotFoundError(f"Audio file {audio_path} does not exist.")
+
     recognizer = sr.Recognizer()
-    with sr.AudioFile(audio_path) as source:
+    with sr.AudioFile(audio_path.as_posix()) as source:
         audio = recognizer.record(source)
     try:
         text = recognizer.recognize_google(audio)
@@ -93,4 +96,9 @@ def transcribe_audio(audio_path) -> str:
         text = "Google Speech Recognition could not understand audio"
     except sr.RequestError as e:
         text = f"Could not request results from Google Speech Recognition service; {e}"
+
+    if save_to_file:
+        save_path = audio_path.parent / "transcript.txt"
+        save_path.write_text(text.strip())
+        logger.info(f"Transcription saved to {save_path}")
     return text
