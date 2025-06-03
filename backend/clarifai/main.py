@@ -1,9 +1,12 @@
+from email.mime import audio
+from importlib import metadata
 import logging
 import json
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
+from numpy import save
 
 from clarifai import DATA_DIR, STATIC_DIR, API_URL
 from clarifai.utils import summarize_text, extract_audio_from_video, transcribe_audio
@@ -82,14 +85,22 @@ async def transcribe_video(video_id: int) -> str:
     Returns
         str: The transcribed text from the video audio.
     """
-    video = await get_video_metadata(video_id)
-    video_url = video.get("url")
+    metadata = await get_video_metadata(video_id)
 
     audio_path = DATA_DIR / f"learning_{video_id}" / "audio.wav"
     audio_path.parent.mkdir(parents=True, exist_ok=True)
 
-    extract_audio_from_video(video_url, audio_path.as_posix())
-    text = transcribe_audio(audio_path.as_posix())
+    if filename := metadata.get("filename"):
+        video_path = DATA_DIR / f"learning_{video_id}" / filename
+        extract_audio_from_video(video_path.as_posix(), audio_path)
+    elif video_url := metadata.get("url"):
+        extract_audio_from_video(video_url, audio_path)
+
+    transcript_path = audio_path.parent / "transcript.txt"
+    if transcript_path.exists():
+        return transcript_path.read_text().strip()
+
+    text = transcribe_audio(audio_path, save_to_file=True)
     if not text.strip():
         raise HTTPException(status_code=400, detail="Transcription failed")
     return text.strip()
