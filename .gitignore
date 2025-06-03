@@ -10,9 +10,13 @@ __pycache__/
 
 # Ignore logs
 *.log
+logs/
 
 # Data
-backend/data/
+backend/data/*
+# Exception for examples data files
+!backend/data/videos.json
+!backend/data/learning_1/
 
 # Node modules
 node_modules/

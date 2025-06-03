@@ -60,7 +60,9 @@ function Video() {
           <p className="tools-intro">Play & Learn with our AI Tools</p>
           <div className="tools-grid">
             <button className="tool-button">Mind Map</button>
-            <button className="tool-button">Summary</button>
+            <button className="tool-button" onClick={
+              () => navigate(`/learnings/${id}/summary`, {state: { title: videoTitle }})
+            }>Summary</button>
             <button className="tool-button" onClick={
               () => navigate(`/learnings/${id}/transcript`, {state: { title: videoTitle }})
             }>Transcript</button>

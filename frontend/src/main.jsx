@@ -6,6 +6,7 @@ import Dashboard from './Dashboard';
 import Learnings from './Learnings';
 import Video from './Video';
 import TranscriptPage from './Transcript';
+import SummaryPage from './Summary';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -14,8 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/learnings" element={<Learnings />} />
-        <Route path="/learnings/:id" element={<Video />} />
+        <Route path="/learnings/:id/" element={<Video />} />
         <Route path="/learnings/:id/transcript" element={<TranscriptPage />} />
+        <Route path="/learnings/:id/summary" element={<SummaryPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
