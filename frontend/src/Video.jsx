@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Sidebar from './Sidebar';
@@ -8,22 +8,26 @@ import './App.css';
 import './Video.css';
 
 function Video() {
+  const navigate = useNavigate();
+
   const { id } = useParams();
+  const [videoTitle, setVideoTitle] = useState(null);
   const [videoData, setVideoData] = useState(null);
 
   useEffect(() => {
-    async function fetchVideo() {
-      const res = await fetch(`http://localhost:8000/video/${id}`);
+    async function fetchVideoMetadata() {
+      const res = await fetch(`http://localhost:8000/videos/${id}/metadata`);
       if (res.ok) {
         const data = await res.json();
         setVideoData(data);
-        document.title = `Video ${id} - ClarifAI`;
+        setVideoTitle(data?.title || `Video ${id}`);
+        document.title = `${data?.title} - ClarifAI`;
       }
       else {
         console.error('Failed to fetch video data');
       }
     }
-    fetchVideo();
+    fetchVideoMetadata();
   }, [id]);
 
   return (
@@ -36,7 +40,7 @@ function Video() {
           </a>
           <a href="/" className="btn-sign">Sign Out</a>
         </header>
-        <h2 className="video-title">{videoData?.title || "Video " + id}</h2>
+        <h2 className="video-title">{videoTitle}</h2>
         <div className="video-layout">
           <div className="video-player-container">
             {videoData ? (
@@ -56,8 +60,10 @@ function Video() {
           <p className="tools-intro">Play & Learn with our AI Tools</p>
           <div className="tools-grid">
             <button className="tool-button">Mind Map</button>
-            <button className="tool-button">Flash Card</button>
-            <button className="tool-button">Transcript</button>
+            <button className="tool-button">Summary</button>
+            <button className="tool-button" onClick={
+              () => navigate(`/learnings/${id}/transcript`, {state: { title: videoTitle }})
+            }>Transcript</button>
             <button className="tool-button">Quizz</button>
           </div>
           <div className="completion-indicator">

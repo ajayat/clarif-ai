@@ -12,8 +12,14 @@ dependencies = [
     "pandas",
     "transformers",
     "torch<3.0",
+    "langchain",
+    "langchain_mistralai",
+    "mistralai",
+    "pdfplumber",
+    "python-multipart",
+    "moviepy",
+    "speechrecognition"
 ]
-
 
 [tool.uv.pip]
 index-url = "https://pypi.org/simple"

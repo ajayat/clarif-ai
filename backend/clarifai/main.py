@@ -1,27 +1,15 @@
 import logging
 import json
-from pathlib import Path
-from dotenv import load_dotenv
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 
-# Load environment variables from .env file
-load_dotenv()
+from clarifai import DATA_DIR, STATIC_DIR, API_URL
+from clarifai.utils import synthesize_text, extract_audio_from_video, transcribe_audio
 
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(levelname)s:     %(asctime)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
+
 logger = logging.getLogger(__name__)
-
-# Define global constants
-ROOT_DIR = Path(__file__).parent.parent
-DATA_DIR = ROOT_DIR / "data"
-STATIC_DIR = ROOT_DIR / "static"
 
 app = FastAPI()
 
@@ -36,7 +24,8 @@ app.add_middleware(
 
 
 @app.get("/", response_class=HTMLResponse)
-async def root():
+async def root() -> HTMLResponse:
+    """Serve the default HTML page."""
     with open(STATIC_DIR / "html/default.html", "r") as file:
         content = file.read()
 
@@ -44,13 +33,79 @@ async def root():
     return HTMLResponse(content=content, status_code=200)
 
 
-@app.get("/video/{video_id}")
-def get_video(video_id: str):
-    with open(DATA_DIR / "videos.json", "r", encoding="utf-8") as file:
-        videos_db = json.load(file)
+@app.get("/videos/{video_id}/metadata", response_model=dict)
+async def get_video_metadata(video_id: int) -> dict:
+    """
+    Get metadata for a video by its ID.
+    Args:
+        video_id (int): The ID of the video to retrieve metadata for.
+    Returns:
+        dict: Metadata for the video, including title, description, and URL.
+    """
+    with open(DATA_DIR / "videos.json", "r", encoding="utf-8") as f:
+        videos = json.load(f)
+    metadata = videos.get(str(video_id))
+    filename = metadata.get("filename").strip()
+    if not metadata or not metadata.get("url") and not filename:
+        raise HTTPException(status_code=404, detail="Video metadata not found")
 
-    video = videos_db.get(video_id)
-    if not video:
+    if metadata.get("filename"):
+        video_path = DATA_DIR / f"learning_{video_id}" / filename
+        if not video_path.exists():
+            raise HTTPException(status_code=404, detail="Video not found")
+        # Construct the URL for the video file (adapt host/port as needed)
+        metadata = {
+            **metadata,
+            "url": f"{API_URL}/videos/{video_id}?filename={filename}",
+        }
+    return metadata
+
+
+@app.get("/videos/{video_id}")
+async def serve_video(video_id: int, filename: str) -> FileResponse:
+    """
+    Serve a video file by its ID and filename.
+    """
+    video_path = DATA_DIR / f"learning_{video_id}" / filename
+    if not video_path.exists():
         raise HTTPException(status_code=404, detail="Video not found")
-    print(video)
-    return video
+
+    return FileResponse(video_path.as_posix(), media_type="videos/mp4")
+
+
+@app.get("/videos/{video_id}/transcribe", response_model=str)
+async def transcribe_video(video_id: int) -> str:
+    """
+    Transcribe the audio from a video file.
+    Args:
+        video_id (int): The ID of the video to transcribe.
+    Returns
+        str: The transcribed text from the video audio.
+    """
+    video = await get_video_metadata(video_id)
+    video_url = video.get("url")
+
+    audio_path = DATA_DIR / f"learning_{video_id}" / "audio.wav"
+    audio_path.parent.mkdir(parents=True, exist_ok=True)
+
+    extract_audio_from_video(video_url, audio_path.as_posix())
+    text = transcribe_audio(audio_path.as_posix())
+    if not text.strip():
+        raise HTTPException(status_code=500, detail="Transcription failed")
+    return text.strip()
+
+
+@app.get("/videos/{video_id}/synthesize", response_model=str)
+async def synthesize_video(video_id: int) -> str:
+    """
+    Synthesize the transcribed text from a video into a summary.
+    Args:
+        video_id (int): The ID of the video to synthesize.
+    Returns:
+        str: The synthesized summary of the video content.
+    """
+    text = await transcribe_video(video_id)["transcription"]
+    summary = synthesize_text(text)
+    if not summary.strip():
+        raise HTTPException(status_code=400, detail="Synthesis failed")
+    return summary
