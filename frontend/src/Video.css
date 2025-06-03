@@ -66,7 +66,7 @@
   margin-bottom: 1rem;
 }
 
-.tools-grid {
+.tools-panel {
   display: flex;
   justify-content: center;
   gap: 2rem;
@@ -114,8 +114,8 @@
 }
 
 .circle-progress {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: radial-gradient(circle, #000 45%, #0dd 46%, #0dd 54%, #000 55%);
   display: flex;

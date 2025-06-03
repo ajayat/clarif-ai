@@ -7,6 +7,8 @@ import Learnings from './Learnings';
 import Video from './Video';
 import TranscriptPage from './Transcript';
 import SummaryPage from './Summary';
+import Help from './Help';
+import Tools from './Tools';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -18,6 +20,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/learnings/:id/" element={<Video />} />
         <Route path="/learnings/:id/transcript" element={<TranscriptPage />} />
         <Route path="/learnings/:id/summary" element={<SummaryPage />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/tools" element={<Tools />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

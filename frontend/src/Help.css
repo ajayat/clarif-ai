@@ -1,0 +1,75 @@
+.help-section {
+  max-width: 50vw;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.help-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.help-content h2 {
+  color: #0dd;
+}
+
+.help-content p {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.8;
+}
+
+.help-content a {
+  color: #0dd;
+  text-decoration: none;
+}
+
+.help-content ul {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+  line-height: 1.8;
+}
+
+.help-content a:hover {
+  text-decoration: underline;
+}
+
+
+.tool-section {
+  max-width: 55vw;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.tool-card {
+  background-color: #1f2229;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(0, 221, 221, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 221, 221, 0.2);
+}
+
+.tool-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #0dd;
+}
+
+.tool-card p {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.6;
+}
