@@ -17,4 +17,4 @@ logging.basicConfig(
 ROOT_DIR = Path(__file__).parent.parent
 DATA_DIR = ROOT_DIR / "data"
 STATIC_DIR = ROOT_DIR / "static"
-API_URL = os.getenv("API_URL", "http://localhost:8000")
+API_URL = os.getenv("API_URL", "/api/")

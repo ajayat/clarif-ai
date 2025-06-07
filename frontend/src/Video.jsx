@@ -16,7 +16,7 @@ function Video() {
 
   useEffect(() => {
     async function fetchVideoMetadata() {
-      const res = await fetch(`http://localhost:8000/videos/${id}/metadata`);
+      const res = await fetch(`/api/videos/${id}/metadata`);
       if (res.ok) {
         const data = await res.json();
         setVideoData(data);

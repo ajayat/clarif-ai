@@ -13,7 +13,7 @@ function SummaryPage() {
 
   useEffect(() => {
     async function fetchSummary() {
-      const res = await fetch(`http://localhost:8000/videos/${id}/summarize`);
+      const res = await fetch(`/api/videos/${id}/summarize`);
       if (res.ok) {
         const data = await res.text();
         const cleanedData = data

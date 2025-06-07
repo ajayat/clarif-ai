@@ -17,7 +17,7 @@ function Chatbot() {
     setMessages(prev => [...prev, userMessage]);
 
     try {
-      const res = await fetch(`http://localhost:8000/videos/${id}/chatbot`, {
+      const res = await fetch(`/api/videos/${id}/chatbot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: input })
