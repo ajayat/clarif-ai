@@ -13,7 +13,7 @@ function TranscriptPage() {
 
   useEffect(() => {
     async function fetchTranscript() {
-      const res = await fetch(`http://localhost:8000/videos/${id}/transcribe`);
+      const res = await fetch(`/api/videos/${id}/transcribe`);
       if (res.ok) {
         const data = await res.text();
         setTranscript(data.trim().replace(/^"|"$/g, ''));
