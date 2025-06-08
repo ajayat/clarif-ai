@@ -32,15 +32,15 @@ function Learnings() {
             </div>
             <div className="learning-card" onClick={() => handleCardClick(2)}>
               <h3 className="card-title">Training Session 2</h3>
-              <p className="card-desc">Topic: Sample Video<br />Date: June 3, 2025</p>
+              <p className="card-desc">Topic: Quelle est la meilleure énergie?<br />Date: June 3, 2025</p>
             </div>
             <div className="learning-card" onClick={() => handleCardClick(3)}>
               <h3 className="card-title">Training Session 3</h3>
-              <p className="card-desc">Topic: Funding<br />Date: May 20, 2025</p>
+              <p className="card-desc">Topic: Principe de la plaque à induction<br />Date: May 20, 2025</p>
             </div>
             <div className="learning-card" onClick={() => handleCardClick(4)}>
               <h3 className="card-title">Training Session 4</h3>
-              <p className="card-desc">Topic: Business Model<br />Date: June 4, 2025</p>
+              <p className="card-desc">Topic: Qu'est-ce que le pH ?<br />Date: June 4, 2025</p>
             </div>
           </div>
         </section>
