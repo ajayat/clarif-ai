@@ -2,16 +2,14 @@ import os
 import re
 import logging
 import tempfile
-from anyio import Path
 import requests
+from pathlib import Path
 
 from moviepy import VideoFileClip
 import speech_recognition as sr
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_mistralai.chat_models import ChatMistralAI
-
-from clarifai import DATA_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -67,11 +65,12 @@ def extract_audio_from_video(video_path_or_url: str, audio_path: Path):
 
 def summarize_text(text: str) -> str:
     if not text.strip():
-        return "No extractable text found in PDF."
+        return "No extractable text found in text."
 
     prompt = PromptTemplate(
         input_variables=["content"],
-        template="Read the following PDF content and summarize it:\n\n{content}\n\nSummary:",
+        template="Lis la transcription de la vidéo et résume là de manière "
+        "structurée et détaillée:\n\n{content}\n\nRésumé:",
     )
 
     chain = LLMChain(llm=mistral_llm, prompt=prompt)
@@ -82,7 +81,9 @@ def summarize_text(text: str) -> str:
 def chatbot_question(question: str, context: str = None) -> str:
     prompt = PromptTemplate(
         input_variables=["question", "context"],
-        template="You are a helpful assistant. Answer the question based on the context provided.\n\nContext: {context}\n\nQuestion: {question}\n\nAnswer:",
+        template="Tu es l'assistant ClarifAI. "
+        "Réponds aux questions en t'appuyant sur le contexte donné.\n"
+        "\nContexte: {context}\n\nQuestion: {question}\n\nRéponse:",
     )
     chain = LLMChain(llm=mistral_llm, prompt=prompt)
     response = chain.run(question=question, context=context or "")
@@ -91,7 +92,7 @@ def chatbot_question(question: str, context: str = None) -> str:
 
 def transcribe_audio(audio_path: Path, save_to_file: bool = True) -> str:
     """
-    Transcribe audio from a file using Google Speech Recognition.
+    Transcribe audio from a file using Sphinx Speech Recognition.
     """
     if not audio_path.exists():
         raise FileNotFoundError(f"Audio file {audio_path} does not exist.")
@@ -100,14 +101,16 @@ def transcribe_audio(audio_path: Path, save_to_file: bool = True) -> str:
     with sr.AudioFile(audio_path.as_posix()) as source:
         audio = recognizer.record(source)
     try:
-        text = recognizer.recognize_google(audio)
-    except sr.UnknownValueError:
-        text = "Google Speech Recognition could not understand audio"
+        text = recognizer.recognize_sphinx(audio, language="fr-FR")
+    except sr.UnknownValueError as e:
+        logger.error(f"Could not recognize audio from {audio_path}: {e}")
+        text = "La reconnaissance vocale n'a pas pu comprendre l'audio."
     except sr.RequestError as e:
-        text = f"Could not request results from Google Speech Recognition service; {e}"
-
-    if save_to_file:
-        save_path = audio_path.parent / "transcript.txt"
-        save_path.write_text(text.strip())
-        logger.info(f"Transcription saved to {save_path}")
+        logger.error(f"Speech recognition service error: {e}")
+        text = "Erreur de service de reconnaissance vocale."
+    else:
+        if save_to_file:
+            save_path = audio_path.parent / "transcript.txt"
+            save_path.write_text(text.strip())
+            logger.info(f"Transcription saved to {save_path}")
     return text

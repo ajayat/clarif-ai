@@ -18,7 +18,7 @@ function SummaryPage() {
         const data = await res.text();
         const cleanedData = data
           .replace(/^"|"$/g, '') // Remove leading and trailing quotes
-          .replace(/\\n/g, '\n'); // Replace escaped newlines with actual newlines
+          .replace(/\\n|\n/g, '\n'); // Replace escaped newlines with actual newlines
         setSummary(cleanedData);
         document.title = `Summary | ${title} - ClarifAI`;
       } else {

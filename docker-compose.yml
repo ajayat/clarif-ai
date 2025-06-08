@@ -23,6 +23,7 @@ services:
     command: npm run start
     volumes:
       - ./frontend/src:/frontend/src
+      - ./frontend/public:/frontend/public
     ports:
       - "3000:3000"
     depends_on:

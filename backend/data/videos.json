@@ -5,8 +5,18 @@
         "filename": "ClarifAI.mp4"
     },
     "2": {
-        "title": "Sample Video",
-        "description": "A sample video for testing purposes",
-        "url": "https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"
+        "title": "Quelle est la meilleure énergie ?",
+        "description": "Vidéo depuis Youtube",
+        "filename": "Youtube1.mp4"
+    },
+    "3": {
+        "title": "Principe de la plaque à induction",
+        "description": "Vidéo depuis Youtube",
+        "filename": "Youtube2.mp4"
+    },
+    "4": {
+        "title": "Qu'est-ce que le pH ?",
+        "description": "Vidéo depuis Youtube",
+        "filename": "Youtube3.mp4"
     }
 }

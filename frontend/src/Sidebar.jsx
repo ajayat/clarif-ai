@@ -1,11 +1,10 @@
-import logo from './assets/logo.svg';
 import { NavLink } from 'react-router-dom';
 import './App.css'
 
 function Sidebar() {
   return (
     <aside className="sidebar">
-      <img src={logo} alt="ClarifAI Logo" className="sidebar-logo" />
+      <img src="/logo.svg" alt="ClarifAI Logo" className="sidebar-logo" />
       <nav className="nav-menu">
         <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
         <NavLink to="/learnings" className={({ isActive }) => isActive ? 'active' : ''}>Trainings</NavLink>

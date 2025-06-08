@@ -1,13 +1,77 @@
+/* Headings */
+.hero-title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-tagline {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+/* Learnings grid */
+.learnings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Card styles */
+.learning-card {
+  background-color: #1e1f23;
+  border: 1px solid #333;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.learning-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px rgba(0, 221, 221, 0.2);
+}
+
+/* Text inside card */
+.card-title {
+  font-size: 1.25rem;
+  color: #0dd;
+  margin-bottom: 0.5rem;
+}
+
+.card-desc {
+  font-size: 0.95rem;
+  color: #eee;
+  line-height: 1.4;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .learnings-container {
+    grid-template-columns: 1fr;
+  }
+  .learning-card {
+    width: 90%;
+  }
+}
+
+/* CTA container */
 .cta-container {
   display: flex;
   flex-direction: row;
-  gap: 2rem; /* Horizontal space between buttons */
+  gap: 2rem;
   justify-content: center;
   align-items: center;
   margin-top: 2rem;
-  /* flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
-
 
 /* Call to action button */
 .btn-cta {
@@ -24,7 +88,7 @@
 .btn-cta:hover {
   opacity: 0.5;
 }
-    
+
 .btn-cta.large {
   font-size: 1.25rem;
   padding: 0 2em;

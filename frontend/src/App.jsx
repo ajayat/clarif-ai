@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import Sidebar from './Sidebar';
-import logo from './assets/logo.svg';
 
 function App() {
   useEffect(() => {
@@ -17,7 +16,7 @@ function App() {
         </header>
         <section className="hero-section">
           <h1 className="hero-title">
-            <img src={logo} alt="ClarifAI Logo" className="hero-logo-left" />
+            <img src="/logo.svg" alt="ClarifAI Logo" className="hero-logo-left" />
             <span className="hero-text">ClarifAI</span>
           </h1>
           <p className="hero-tagline">Never Stop Your Doubt,</p>

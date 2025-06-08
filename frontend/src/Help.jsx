@@ -3,6 +3,8 @@ import './App.css';
 import './Help.css';
 
 function Help() {
+  document.title = `Help - ClarifAI`;
+
   return (
     <div className="app-container">
       <Sidebar />

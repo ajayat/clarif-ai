@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { marked } from 'marked';
 import './Chatbot.css';
 
 function Chatbot() {
   const { id } = useParams();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Ask a question to ClarifAI Chatbot' }
+    { sender: 'bot', text: "Bonjour, je suis l'assistant ClarifAI, comment puis-je vous aider ?" }
   ]);
   const messagesEndRef = useRef(null);
 
@@ -22,14 +23,18 @@ function Chatbot() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: input })
       });
-
       const reply = await res.text();
-      const cleanedReply = reply.replace(/^"|"$/g, ''); // Clean up quotes if present
-      setMessages(prev => [...prev, { sender: 'bot', text: cleanedReply}]);
+      const cleanedReply = reply
+          .replace(/^"|"$/g, '') // Remove leading and trailing quotes
+          .replace(/\\n|\n/g, '\n'); // Replace escaped newlines with actual newlines
+      const mdReply = marked.parse(cleanedReply.trim());
+      setMessages(prev => [...prev, { sender: 'bot', text: mdReply }]);
     } catch (error) {
-      setMessages(prev => [...prev, { sender: 'bot', text: 'Error: Could not get response.' }]);
+      setMessages(prev => [...prev, {
+        sender: 'bot', 
+        text: 'Erreur: service temporairement indisponible.'
+      }]);
     }
-
     setInput('');
   };
 
@@ -47,14 +52,18 @@ function Chatbot() {
     <div className="chatbot-box">
       <div className="chatbot-messages">
         {messages.map((msg, idx) => (
-          <div key={idx} className={`chatbot-message ${msg.sender}`}>{msg.text}</div>
+        <div
+          key={idx}
+          className={`chatbot-message ${msg.sender}`}
+          dangerouslySetInnerHTML={{ __html: msg.text }}
+        ></div>
         ))}
         <div ref={messagesEndRef} />
       </div>
       <div className="chatbot-input-area">
         <input
           type="text"
-          placeholder="Need any clarifications?"
+          placeholder="Besoin de clarifications ?"
           className="chatbot-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}

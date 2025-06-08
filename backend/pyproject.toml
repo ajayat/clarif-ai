@@ -18,7 +18,7 @@ dependencies = [
     "pdfplumber",
     "python-multipart",
     "moviepy",
-    "speechrecognition"
+    "SpeechRecognition[pocketsphinx]"
 ]
 
 [tool.uv.pip]
