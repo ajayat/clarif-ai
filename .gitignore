@@ -15,11 +15,13 @@ logs/
 # Environment variables
 .env
 
-# Data
-backend/data/*
-# Exception for examples data files
-!backend/data/videos.json
-!backend/data/learning_[1-4]/
-
 # Node modules
 node_modules/
+
+# Data
+backend/data/*
+backend/data/**/*.wav
+
+# Exception for examples data files
+!backend/data/videos.json
+!backend/data/learning_[1-4]
